@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: 'Outfit', Inter, system-ui, sans-serif;
+  background-color: #f9fafb;
+  color: #111827;
+  /* Force dark gray/black text */
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background-color: #f9fafb;
+  color: #111827;
+  display: block;
+  /* Remove flex centering */
+}
+
+#root {
+  width: 100%;
+}
+
+input {
+  color: #111827 !important;
+  /* Force input text to be dark */
+}
+
+input::placeholder {
+  color: #9ca3af;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    background-color: #f9fafb;
+    /* Keep it light even in dark mode for pharmacy staff */
+    color: #111827;
+  }
+}
