@@ -3,11 +3,11 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 async function testConnection() {
-    const uri = process.env.MONGO_URI;
+    const uri = process.env.MONGO_URL || process.env.MONGO_URI;
     console.log('--- Database Connection Test ---');
     console.log('Testing connection to:', uri ? (uri.split('@')[1] || 'URL format check needed') : 'MISSING URI');
     try {
-        if (!uri) throw new Error('MONGO_URI is undefined. Check your environment variables.');
+        if (!uri) throw new Error('MONGO_URL or MONGO_URI is undefined. Check your environment variables.');
         await mongoose.connect(uri);
         console.log('✅ SUCCESS: Connected to MongoDB perfectly!');
         process.exit(0);
