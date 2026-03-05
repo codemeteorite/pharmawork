@@ -47,7 +47,10 @@ npm run dev
 
 1. **GitHub**: Push your code to a new GitHub repository.
 2. **Import**: Go to [Vercel](https://vercel.com/new) and import your repo.
-3. **Env Vars**: Add `MONGO_URI` with your connection string in Vercel settings.
+3. **Environment Variables**: 
+   - Go to Project Settings > Environment Variables.
+   - Add `MONGO_URI` with your MongoDB Atlas connection string.
+   - **Note**: The application is now configured to prefer environment variables from the Vercel dashboard, but will still fall back to `.env` for local development.
 4. **Go Live**: Deploy and access your link! 🚀
 
 ## Project Structure

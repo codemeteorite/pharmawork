@@ -20,7 +20,7 @@ const AddCredit = () => {
             alert('Success! Credit has been recorded.');
             navigate('/');
         } catch (error) {
-            alert(error.response?.data?.message || 'Check your database connection in .env');
+            alert(error.response?.data?.message || 'Check your database connection/environment variables');
         } finally {
             setLoading(false);
         }

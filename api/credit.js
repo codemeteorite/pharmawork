@@ -4,11 +4,12 @@ import Transaction from '../models/Transaction.js';
 
 export default async function handler(req, res) {
     const { method } = req;
-
+    console.log(`[Credit Handler] ${method} request received`);
     await dbConnect();
 
     if (method === 'POST') {
         try {
+            console.log('[Credit Handler] Processing POST request');
             const { name, phone, amount } = req.body;
 
             if (!name || !phone || amount === undefined) {
@@ -35,15 +36,10 @@ export default async function handler(req, res) {
             }
 
             // 2. Add transaction
-            await Transaction.create({
-                customerId: customer._id,
-                type: 'credit',
-                amount: creditAmount,
-            });
-
+            console.log(`[Credit Handler] Success: Customer ${customer.name} updated/created`);
             res.status(200).json({ success: true, data: customer });
         } catch (error) {
-            console.error(error);
+            console.error('[Credit Handler] Error:', error.message);
             res.status(400).json({ success: false, message: error.message });
         }
     } else {

@@ -23,12 +23,19 @@ app.use(express.json());
 
 // Mock Vercel req/res for the handlers with improved error handling
 const vercelWrapper = (handler) => async (req, res) => {
+    console.log(`[${new Date().toISOString()}] Incoming Request: ${req.method} ${req.url}`);
+    if (Object.keys(req.body).length > 0) {
+        console.log('Request Body:', JSON.stringify(req.body, null, 2));
+    }
+
     const vercelRes = {
         status: (code) => {
+            console.log(`Response Status: ${code}`);
             res.status(code);
             return vercelRes;
         },
         json: (data) => {
+            console.log('Response Body:', JSON.stringify(data, null, 2));
             res.json(data);
             return vercelRes;
         },
@@ -36,10 +43,10 @@ const vercelWrapper = (handler) => async (req, res) => {
     try {
         await handler(req, vercelRes);
     } catch (error) {
-        console.error(`API Error [${req.url}]:`, error);
+        console.error(`❌ API Error [${req.url}]:`, error);
         res.status(500).json({
             success: false,
-            message: 'Database connection failed. Please check your .env password.',
+            message: 'Database connection failed. Please check your environment variables.',
             error: error.message
         });
     }

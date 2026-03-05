@@ -4,12 +4,13 @@ import Transaction from '../models/Transaction.js';
 
 export default async function handler(req, res) {
     const { method } = req;
-
+    console.log(`[Payment Handler] ${method} request received`);
     await dbConnect();
 
     if (method === 'POST') {
         try {
             const { customerId, amount } = req.body;
+            console.log(`[Payment Handler] Processing payment of ${amount} for customer: ${customerId}`);
 
             if (!customerId || amount === undefined) {
                 return res.status(400).json({ success: false, message: 'Missing required fields' });
@@ -36,9 +37,10 @@ export default async function handler(req, res) {
                 amount: paymentAmount,
             });
 
+            console.log(`[Payment Handler] Success: Payment of ${paymentAmount} recorded for ${customer.name}`);
             res.status(200).json({ success: true, data: customer });
         } catch (error) {
-            console.error(error);
+            console.error('[Payment Handler] Error:', error.message);
             res.status(400).json({ success: false, message: error.message });
         }
     } else {
