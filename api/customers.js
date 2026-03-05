@@ -19,6 +19,9 @@ export default async function handler(req, res) {
             }
 
             // Get customers with pending dues (sorted by highest due)
+            const customers = await Customer.find({ total_due: { $gt: 0 } })
+                .sort({ total_due: -1 });
+
             console.log(`[Customers Handler] Success: Found ${customers.length} customers with pending dues`);
             res.status(200).json({ success: true, data: customers });
         } catch (error) {

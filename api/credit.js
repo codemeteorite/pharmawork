@@ -36,6 +36,12 @@ export default async function handler(req, res) {
             }
 
             // 2. Add transaction
+            await Transaction.create({
+                customerId: customer._id,
+                type: 'credit',
+                amount: creditAmount,
+            });
+
             console.log(`[Credit Handler] Success: Customer ${customer.name} updated/created`);
             res.status(200).json({ success: true, data: customer });
         } catch (error) {
