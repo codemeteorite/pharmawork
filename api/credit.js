@@ -45,8 +45,12 @@ export default async function handler(req, res) {
             console.log(`[Credit Handler] Success: Customer ${customer.name} updated/created`);
             res.status(200).json({ success: true, data: customer });
         } catch (error) {
-            console.error('[Credit Handler] Error:', error.message);
-            res.status(400).json({ success: false, message: error.message });
+            console.error('[Credit Handler] Error detail:', error);
+            res.status(500).json({
+                success: false,
+                message: error.message || 'An unexpected error occurred in the credit handler',
+                error: error.message
+            });
         }
     } else {
         res.status(405).json({ success: false, message: 'Method Not Allowed' });

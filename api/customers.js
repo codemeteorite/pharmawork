@@ -25,8 +25,12 @@ export default async function handler(req, res) {
             console.log(`[Customers Handler] Success: Found ${customers.length} customers with pending dues`);
             res.status(200).json({ success: true, data: customers });
         } catch (error) {
-            console.error('[Customers Handler] Error:', error.message);
-            res.status(400).json({ success: false, message: error.message });
+            console.error('[Customers Handler] Error detail:', error);
+            res.status(500).json({
+                success: false,
+                message: error.message || 'An unexpected error occurred in the customers handler',
+                error: error.message
+            });
         }
     } else {
         res.status(405).json({ success: false, message: 'Method Not Allowed' });
