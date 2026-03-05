@@ -5,10 +5,9 @@ import Transaction from '../models/Transaction.js';
 export default async function handler(req, res) {
     const { method } = req;
     console.log(`[Credit Handler] ${method} request received`);
-    await dbConnect();
-
     if (method === 'POST') {
         try {
+            await dbConnect();
             console.log('[Credit Handler] Processing POST request');
             const { name, phone, amount } = req.body;
 

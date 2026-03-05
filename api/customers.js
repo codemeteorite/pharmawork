@@ -4,10 +4,9 @@ import Customer from '../models/Customer.js';
 export default async function handler(req, res) {
     const { method, query } = req;
     console.log(`[Customers Handler] ${method} request received`);
-    await dbConnect();
-
     if (method === 'GET') {
         try {
+            await dbConnect();
             if (query.id) {
                 console.log(`[Customers Handler] Fetching customer with ID: ${query.id}`);
                 // Get single customer
